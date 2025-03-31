@@ -1,0 +1,188 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background-color: #121212;
+    color: white;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    touch-action: manipulation;
+}
+
+.header {
+    padding: 10px;
+    text-align: center;
+    background-color: #1e1e1e;
+}
+
+.connection-status {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 5px;
+}
+
+.status-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: #ff453a;
+    margin-right: 8px;
+    transition: background-color 0.3s ease;
+}
+
+.status-dot.connected {
+    background-color: #30d158;
+}
+
+.main-container {
+    display: flex;
+    flex: 1;
+    padding: 10px;
+    gap: 10px;
+}
+
+.joystick-container {
+    display: flex;
+    flex: 1;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.joystick {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    position: relative;
+    touch-action: none;
+    transition: transform 0.1s ease;
+}
+
+#joystick-left {
+    background-color: rgba(10, 132, 255, 0.3);
+    border: 2px solid #0a84ff;
+}
+
+#joystick-middle {
+    background-color: rgba(10, 132, 255, 0.3);
+    border: 2px solid #0a84ff;
+}
+
+#joystick-right {
+    background-color: rgba(255, 255, 255, 0.3);
+    border: 2px solid white;
+}
+
+.joystick-handle {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    position: absolute;
+    top: 30px;
+    left: 30px;
+    background-color: rgba(255, 255, 255, 0.9);
+    transition: transform 0.1s ease;
+}
+
+#right-handle {
+    background-color: #0a84ff;
+}
+
+.values-panel {
+    width: 120px;
+    background-color: #1e1e1e;
+    border-radius: 10px;
+    padding: 10px;
+    overflow-y: auto;
+}
+
+.motor-value {
+    margin-bottom: 12px;
+    animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.motor-label {
+    font-size: 12px;
+    color: #8e8e93;
+    margin-bottom: 2px;
+}
+
+.motor-data {
+    font-size: 16px;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.motor-data.changed {
+    color: #0a84ff;
+    animation: pulse 0.5s ease;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+.footer {
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    background-color: #1e1e1e;
+}
+
+.control-btn {
+    background-color: #0a84ff;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.control-btn:active {
+    transform: scale(0.95);
+    background-color: #0066cc;
+}
+
+@media (orientation: portrait) {
+    .orientation-warning {
+        display: flex;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0,0,0,0.9);
+        color: white;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        z-index: 100;
+        font-size: 24px;
+        padding: 20px;
+    }
+}
+
+@media (orientation: landscape) {
+    .orientation-warning {
+        display: none;
+    }
+}
