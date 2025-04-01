@@ -52,25 +52,61 @@ initJoystick('joystick-right', 'right-handle', (x, y, isPressed) => {
     }
 });
 
+
+
+
+
+
+
+
+
 // Bouton réinitialisation
 resetBtn.addEventListener('click', () => {
     // Animation du bouton
     resetBtn.classList.add('active');
     setTimeout(() => resetBtn.classList.remove('active'), 300);
     
-    // Réinitialisation des valeurs
+    // Affiche "Réinitialisation..."
+    statusText.textContent = "Réinitialisation...";
+
+    // Réinitialisation des moteurs à la position par défaut
     updateMotorValue(1, 90);
     updateMotorValue(2, 90);
     updateMotorValue(3, 90);
     updateMotorValue(4, 90);
     updateMotorValue(5, 90);
-    updateMotorValue(6, 10);
-    
-    // Réinitialiser les positions des joysticks
+    updateMotorValue(6, 73);
+
+    // Réinitialisation visuelle des joysticks
     document.getElementById('left-handle').style.transform = 'translate(0, 0)';
     document.getElementById('middle-handle').style.transform = 'translate(0, 0)';
     document.getElementById('right-handle').style.transform = 'translate(0, 0)';
+
+    // 🔁 Vérifie périodiquement si toutes les valeurs sont bonnes
+    const checkInterval = setInterval(() => {
+        const allAtDefault = (
+            motorValues.m1 === 90 &&
+            motorValues.m2 === 90 &&
+            motorValues.m3 === 90 &&
+            motorValues.m4 === 90 &&
+            motorValues.m5 === 90 &&
+            motorValues.m6 === 73
+        );
+
+        if (allAtDefault) {
+            clearInterval(checkInterval); // on arrête de vérifier
+            statusText.textContent = "Connecté"; // ✅ on remet à jour
+        }
+    }, 100); // vérifie toutes les 100ms
 });
+
+
+
+
+
+
+
+
 
 // Simuler la connexion Bluetooth
 setTimeout(() => {
