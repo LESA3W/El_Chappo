@@ -97,47 +97,53 @@ body {
 #joystick-left {
     width: min(235px, 40vw);
     height: min(235px, 40vw);
-    background-color: rgba(10, 132, 255, 0.3);
+    background-color: #0a84ff27;
     border: 5px solid #0a84ff;
+    margin-left: 95px;
 }
 
 #joystick-middle {
     width: min(235px, 40vw);
     height: min(235px, 40vw);
-    background-color: rgba(10, 132, 255, 0.3);
+    background-color: #0a84ff27;
     border: 5px solid #0a84ff;
+    margin-left: 95px;
 }
 
 #joystick-right {
     width: min(120px, 40vw);
     height: min(120px, 40vw);
     background-color: rgba(255, 255, 255, 0.3);
-    border: 2px solid white;
+    border: 3px solid white;
+
 }
 
 /* Handles */
-#left-handle {
+#handle-left {
     width: 120px;
     height: 120px;
-    background-color: rgba(255, 255, 255);
+    background-color: #FFFFFF;
+    border: 5px, solid #0a84ff86;
 }
 
-#middle-handle {
-    width: 120px;
+#handle-middle {
+    width: 120px;   
     height: 120px;
-    background-color: rgba(255, 255, 255);
+    background-color: #FFFFFF;
+    border: 5px, solid #0a84ff86
 }
 
-#right-handle {
+#handle-right {
     width: 60px;
     height: 60px;
     background-color: #0a84ff;
+    border: 3.7px, solid #d6d6d6;
 }
 
 /* Position centrale commune */
-#left-handle,
-#middle-handle,
-#right-handle {
+#handle-left,
+#handle-middle,
+#handle-right {
     border-radius: 50%;
     position: absolute;
     top: 50%;
