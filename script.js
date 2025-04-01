@@ -22,7 +22,7 @@ const motorValueElements = {
 };
 
 // Initialisation des joysticks
-initJoystick('joystick-left', 'left-handle', (x, y) => {
+initJoystick('joystick-left', 'handle-left', (x, y) => {
     // Contrôle M1 (base) et M2 (épaule)
     const newM1 = Math.max(0, Math.min(180, Math.round(90 + (x * 90))));
     const newM2 = Math.max(15, Math.min(165, Math.round(90 + (y * 45))));
@@ -31,7 +31,7 @@ initJoystick('joystick-left', 'left-handle', (x, y) => {
     updateMotorValue(2, newM2);
 });
 
-initJoystick('joystick-middle', 'middle-handle', (x, y) => {
+initJoystick('joystick-middle', 'handle-middle', (x, y) => {
     // Contrôle M3 (coude) et M4 (poignet vertical)
     const newM3 = Math.max(0, Math.min(180, Math.round(90 + (y * 90))));
     const newM4 = Math.max(0, Math.min(180, Math.round(90 + (x * 90))));
@@ -40,7 +40,7 @@ initJoystick('joystick-middle', 'middle-handle', (x, y) => {
     updateMotorValue(4, newM4);
 });
 
-initJoystick('joystick-right', 'right-handle', (x, y, isPressed) => {
+initJoystick('joystick-right', 'handle-right', (x, y, isPressed) => {
     // Contrôle M5 (rotation poignet) et M6 (pince)
     const newM5 = Math.max(0, Math.min(180, Math.round(90 + (x * 90))));
     
@@ -78,9 +78,9 @@ resetBtn.addEventListener('click', () => {
     updateMotorValue(6, 73);
 
     // Réinitialisation visuelle des joysticks
-    document.getElementById('left-handle').style.transform = 'translate(0, 0)';
-    document.getElementById('middle-handle').style.transform = 'translate(0, 0)';
-    document.getElementById('right-handle').style.transform = 'translate(0, 0)';
+    document.getElementById('handle-left').style.transform = 'translate(0, 0)';
+    document.getElementById('handle-middle').style.transform = 'translate(0, 0)';
+    document.getElementById('handle-right').style.transform = 'translate(0, 0)';
 
     // 🔁 Vérifie périodiquement si toutes les valeurs sont bonnes
     const checkInterval = setInterval(() => {
