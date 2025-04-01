@@ -3,69 +3,78 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Contrôle Braccio Mobile</title>
+    <title>Manette El-Chappo</title>
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="orientation-warning">
-        Veuillez tourner votre téléphone en mode paysage pour utiliser l'application
+
+<!--Message d'Alerte Orientation--> 
+<div class="orientation-warning">
+    Veuillez tourner votre téléphone en mode paysage pour utiliser la manette
+</div>
+
+<!--Header-->    
+<div class="header">
+    <h1>El-Chappo</h1>
+    <div class="connection-status">
+        <div class="status-dot" id="status-dot"></div>
+        <span id="status-text">Déconnecté</span>
     </div>
-    
-    <div class="header">
-        <h1>Contrôle Braccio</h1>
-        <div class="connection-status">
-            <div class="status-dot" id="status-dot"></div>
-            <span id="status-text">Déconnecté</span>
-        </div>
-    </div>
-    
-    <div class="main-container">
-        <div class="joystick-container">
-            <div class="joystick" id="joystick-left">
-                <div class="joystick-handle" id="left-handle"></div>
-            </div>
-            
-            <div class="joystick" id="joystick-middle">
-                <div class="joystick-handle" id="middle-handle"></div>
-            </div>
-            
-            <div class="joystick" id="joystick-right">
-                <div class="joystick-handle" id="right-handle"></div>
-            </div>
+</div>
+
+<!--Joysticks Container-->
+<div class="main-container">
+    <div class="joystick-container">
+        <div class="joystick" id="joystick-left">
+            <div class="joystick-handle" id="left-handle"></div>
         </div>
         
-        <div class="values-panel" id="values-panel">
-            <div class="motor-value">
-                <div class="motor-label">M1 - Base</div>
-                <div class="motor-data" id="m1-value">90°</div>
-            </div>
-            <div class="motor-value">
-                <div class="motor-label">M2 - Épaule</div>
-                <div class="motor-data" id="m2-value">90°</div>
-            </div>
-            <div class="motor-value">
-                <div class="motor-label">M3 - Coude</div>
-                <div class="motor-data" id="m3-value">90°</div>
-            </div>
-            <div class="motor-value">
-                <div class="motor-label">M4 - Poignet V</div>
-                <div class="motor-data" id="m4-value">90°</div>
-            </div>
-            <div class="motor-value">
-                <div class="motor-label">M5 - Poignet R</div>
-                <div class="motor-data" id="m5-value">90°</div>
-            </div>
-            <div class="motor-value">
-                <div class="motor-label">M6 - Pince</div>
-                <div class="motor-data" id="m6-value">Ouverte</div>
-            </div>
+        <div class="joystick" id="joystick-middle">
+            <div class="joystick-handle" id="middle-handle"></div>
+        </div>
+        
+        <div class="joystick" id="joystick-right">
+            <div class="joystick-handle" id="right-handle"></div>
         </div>
     </div>
-    
-    <div class="footer">
-        <button class="control-btn" id="reset-btn">Réinitialiser</button>
+</div>
+
+<!--Panel Motors-->
+<div class="values-panel" id="values-panel">
+    <div class="motor-value">
+        <div class="motor-label">Base</div>
+        <div class="motor-data" id="m1-value">90°</div>
     </div>
-    
-    <script src="script.js"></script>
+    <div class="motor-value">
+        <div class="motor-label">Épaule</div>
+        <div class="motor-data" id="m2-value">90°</div>
+    </div>
+    <div class="motor-value">
+        <div class="motor-label">Coude</div>
+        <div class="motor-data" id="m3-value">90°</div>
+    </div>
+    <div class="motor-value">
+        <div class="motor-label">Poignet V</div>
+        <div class="motor-data" id="m4-value">90°</div>
+    </div>
+    <div class="motor-value">
+        <div class="motor-label">Poignet R</div>
+        <div class="motor-data" id="m5-value">90°</div>
+    </div>
+    <div class="motor-value">
+        <div class="motor-label">Pince</div>
+        <div class="motor-data" id="m6-value">Ouverte</div>
+    </div>
+</div>
+
+
+<!--Footer-->
+<div class="footer">
+    <button class="control-btn" id="reset-btn">Réinitialiser</button>
+</div>
+
+<!--Script JS-->    
+<script src="script.js"></script>
 </body>
 </html>
