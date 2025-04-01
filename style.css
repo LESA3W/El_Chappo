@@ -7,21 +7,20 @@
     user-select: none;
 }
 
-body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    background-color: #121212;
-    color: white;
-    height: 100vh;
+html, body {
+    width: 100%;
+    height: 100%;
     overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    touch-action: manipulation;
+    touch-action: none;
+    font-family: 'Montserrat', sans-serif;
 }
 
+/*Header*/
+
 .header {
-    padding: 10px;
+    padding: 10px 0;
     text-align: center;
-    background-color: #1e1e1e;
+    flex-shrink: 0;
 }
 
 .connection-status {
@@ -44,40 +43,64 @@ body {
     background-color: #30d158;
 }
 
-.main-container {
+/* Main layout */
+
+body {
     display: flex;
+    flex-direction: column;
+    background-color: #121212;
+    color: white;
+}
+
+
+
+/* Main Container */
+
+.main-container {
+    position: relative;
     flex: 1;
+    display: flex;
     padding: 10px;
     gap: 10px;
+    /* overflow: hidden; ❌ plus nécessaire */
 }
+
+
+
+
+/* Joysticks Container */
 
 .joystick-container {
     display: flex;
-    flex: 1;
     justify-content: space-between;
     align-items: center;
+    width: 100%;
 }
 
+
+
+
+
+/* Joystick Styles */
+
 .joystick {
-    width: 100px;
-    height: 100px;
     border-radius: 50%;
     position: relative;
     touch-action: none;
     transition: transform 0.1s ease;
 }
 
-#joystick-left {
-    background-color: rgba(10, 132, 255, 0.3);
-    border: 2px solid #0a84ff;
-}
-
+#joystick-left,
 #joystick-middle {
+    width: 180px;
+    height: 180px;
     background-color: rgba(10, 132, 255, 0.3);
-    border: 2px solid #0a84ff;
+    border: 5px solid #0a84ff;
 }
 
 #joystick-right {
+    width: 80px;
+    height: 80px;
     background-color: rgba(255, 255, 255, 0.3);
     border: 2px solid white;
 }
@@ -87,8 +110,9 @@ body {
     height: 40px;
     border-radius: 50%;
     position: absolute;
-    top: 30px;
-    left: 30px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     background-color: rgba(255, 255, 255, 0.9);
     transition: transform 0.1s ease;
 }
@@ -97,13 +121,25 @@ body {
     background-color: #0a84ff;
 }
 
+
+
+
+
+/* Panel */
+
 .values-panel {
+    position: fixed; /* ✅ change absolute → fixed */
+    top: 10px;
+    right: 10px;
     width: 120px;
     background-color: #1e1e1e;
     border-radius: 10px;
     padding: 10px;
     overflow-y: auto;
+    z-index: 999;
 }
+
+
 
 .motor-value {
     margin-bottom: 12px;
@@ -123,7 +159,7 @@ body {
 
 .motor-data {
     font-size: 16px;
-    font-weight: 500;
+    font-weight: 600;
     transition: color 0.3s ease;
 }
 
@@ -138,11 +174,19 @@ body {
     100% { transform: scale(1); }
 }
 
+
+
+
+
+/* Footer */
+
 .footer {
     padding: 10px;
     display: flex;
     justify-content: center;
-    background-color: #1e1e1e;
+    font-family: 'Montserrat', sans-serif;
+    flex-shrink: 0;
+    
 }
 
 .control-btn {
@@ -152,7 +196,7 @@ body {
     border-radius: 20px;
     padding: 10px 20px;
     font-size: 16px;
-    font-weight: 500;
+    font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
 }
@@ -162,27 +206,41 @@ body {
     background-color: #0066cc;
 }
 
-@media (orientation: portrait) {
+
+
+
+
+
+
+/* Orientation Warning */
+@media screen and (max-height: 400px) and (orientation: landscape) {
+
     .orientation-warning {
+        display: none !important;
+    }
+
+    body {
         display: flex;
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background-color: rgba(0,0,0,0.9);
-        color: white;
-        justify-content: center;
+    }
+}
+
+@media screen and (min-height: 401px), (orientation: portrait) {
+    body {
+        display: none !important;
+    }
+
+    html::before {
+        content: "Ce site est uniquement disponible sur iPhone 15 en mode paysage.";
+        display: flex;
         align-items: center;
+        justify-content: center;
+        height: 100vh;
         text-align: center;
-        z-index: 100;
-        font-size: 24px;
+        color: white;
+        background: #121212;
+        font-size: 20px;
+        font-family: 'Montserrat', sans-serif;
         padding: 20px;
     }
 }
 
-@media (orientation: landscape) {
-    .orientation-warning {
-        display: none;
-    }
-}
