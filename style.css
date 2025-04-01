@@ -92,15 +92,15 @@ body {
 
 #joystick-left,
 #joystick-middle {
-    width: 180px;
-    height: 180px;
+    width: min(180px, 40vw);
+    height: min(180px, 40vw);
     background-color: rgba(10, 132, 255, 0.3);
     border: 5px solid #0a84ff;
 }
 
 #joystick-right {
-    width: 80px;
-    height: 80px;
+    width: min(80px, 15vw);
+    height: min(80px, 15vw);
     background-color: rgba(255, 255, 255, 0.3);
     border: 2px solid white;
 }
@@ -213,8 +213,7 @@ body {
 
 
 /* Orientation Warning */
-@media screen and (max-height: 400px) and (orientation: landscape) {
-
+@media screen and (orientation: landscape) {
     .orientation-warning {
         display: none !important;
     }
@@ -224,13 +223,14 @@ body {
     }
 }
 
-@media screen and (min-height: 401px), (orientation: portrait) {
+/* ❌ Quand on est en portrait : on masque le site et affiche un message */
+@media screen and (orientation: portrait) {
     body {
         display: none !important;
     }
 
     html::before {
-        content: "Ce site est uniquement disponible sur iPhone 15 en mode paysage.";
+        content: "Veuillez passer en mode paysage pour utiliser la manette.";
         display: flex;
         align-items: center;
         justify-content: center;
@@ -243,4 +243,5 @@ body {
         padding: 20px;
     }
 }
+
 
