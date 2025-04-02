@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover, user-scalable=no">
     <title>Manette El-Chappo</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -33,14 +33,13 @@
         <div class="joystick-handle" id="handle-left"></div>
     </div>
     
-    <div class="joystick" id="joystick-middle">
-        <div class="joystick-handle" id="handle-middle"></div>
-    </div>
-    
     <div class="joystick" id="joystick-right">
         <div class="joystick-handle" id="handle-right"></div>
     </div>
     
+    <div class="joystick" id="joystick-middle">
+        <div class="joystick-handle" id="handle-middle"></div>
+    </div>
 
 
 <!--Panel Motors-->
@@ -78,6 +77,11 @@
         alt="Réinitialiser le robot" 
         class="reset-image-btn" 
         id="reset-btn">
+    
+    <img src="assets/reset.png" 
+        alt="Action personnalisée" 
+        class="action-image-btn" 
+        id="custom-btn">
 
 
 <div class="footer">
