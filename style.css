@@ -8,23 +8,28 @@
 }
 
 html, body {
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    touch-action: none;
-    font-family: 'Montserrat', sans-serif;
-    margin: 0;
     padding: 0;
-    position: fixed;
-    inset: 0;
+    margin: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    background: #121212;
+    font-family: 'Montserrat', sans-serif;
+    position: relative;
+    touch-action: none;
+}
+
+body {
+    -webkit-overflow-scrolling: touch;
 }
 
 /*Header*/
 
 .header {
-    padding: 10px 0;
+    padding: 10px;
     text-align: center;
     flex-shrink: 0;
+    margin-right: 100px; 
 }
 
 .connection-status {
@@ -64,9 +69,12 @@ body {
     position: relative;
     flex: 1;
     display: flex;
+    justify-content: space-between; /* ou space-around */
+    align-items: center;
     padding: 10px;
-    gap: 10px;
-    /* overflow: hidden; ❌ plus nécessaire */
+    width: 100%;
+    max-width: 100vw;
+    margin-bottom: 90px;
 }
 
 
@@ -76,12 +84,10 @@ body {
 
 .joystick-container {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly; /* ou center + gap */
     align-items: center;
     width: 100%;
 }
-
-
 
 
 
@@ -91,28 +97,31 @@ body {
     position: relative;
     touch-action: none;
     transition: transform 0.1s ease;
+
 }
 
 /* Joysticks */
 #joystick-left {
-    width: min(235px, 40vw);
-    height: min(235px, 40vw);
+    width: min(40vw, 200px);
+    height: min(40vw, 200px);
     background-color: #0a84ff27;
     border: 5px solid #0a84ff;
-    margin-left: 95px;
+    margin-left: 60px;
+
 }
 
 #joystick-middle {
-    width: min(235px, 40vw);
-    height: min(235px, 40vw);
+    width: min(40vw, 200px);
+    height: min(40vw, 200px);
     background-color: #0a84ff27;
     border: 5px solid #0a84ff;
-    margin-left: 95px;
+    margin-right: 40px;
+
 }
 
 #joystick-right {
-    width: min(120px, 40vw);
-    height: min(120px, 40vw);
+    width: min(30vw, 120px);
+    height: min(30vw, 120px);
     background-color: rgba(255, 255, 255, 0.3);
     border: 3px solid white;
 
@@ -120,24 +129,32 @@ body {
 
 /* Handles */
 #handle-left {
-    width: 120px;
-    height: 120px;
+    width: 105px;
+    height: 105px;
     background-color: #FFFFFF;
-    border: 5px, solid #0a84ff86;
+    border: 5px solid #0a84ff86;
 }
 
 #handle-middle {
-    width: 120px;   
-    height: 120px;
+    width: 105px;   
+    height: 105px;
     background-color: #FFFFFF;
-    border: 5px, solid #0a84ff86
+    border: 5px solid #0a84ff86
 }
 
 #handle-right {
     width: 60px;
     height: 60px;
-    background-color: #0a84ff;
-    border: 3.7px, solid #d6d6d6;
+    border-radius: 50%;
+    background-image: url("assets/pince-open.png"); /* ton image ici */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border: none; /* tu peux garder ou enlever */
+    transition: transform 0.25s cubic-bezier(0.33, 1.5, 0.68, 1);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 /* Position centrale commune */
@@ -149,7 +166,9 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    transition: transform 0.1s ease;
+    transition: transform 0.25s cubic-bezier(0.33, 1.5, 0.68, 1);
+
+    
 }
 
 
@@ -218,15 +237,14 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    opacity: 0;     
+    opacity: 0;    
 }
 
 
 .reset-image-btn {
     position: fixed;
     bottom: 10px;
-    left: 50%;
-    transform: translateX(-50%);
+    left: 42%;
     width: 55px;
     height: 55px;
     border-radius: 50%;
@@ -241,6 +259,68 @@ body {
     transform: translateX(-50%) scale(0.9);
 }
 
+
+
+
+
+
+
+@keyframes halo {
+    0% {
+        box-shadow: 0 0 0 0 rgba(10, 132, 255, 0.5);
+    }
+    100% {
+        box-shadow: 0 0 0 15px rgba(10, 132, 255, 0);
+    }
+}
+
+.motor-data.halo {
+    animation: halo 0.6s ease-out;
+}
+
+
+
+
+
+
+
+@keyframes pulse-btn {
+    0% {
+        box-shadow: 0 0 0 0 rgba(10, 132, 255, 0.5);
+        transform: scale(1);
+    }
+    70% {
+        box-shadow: 0 0 0 20px rgba(10, 132, 255, 0);
+        transform: scale(1.1);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(10, 132, 255, 0);
+        transform: scale(1);
+    }
+}
+
+.reset-image-btn.pulse-feedback {
+    animation: pulse-btn 1s ease-out infinite;
+}
+
+
+.action-image-btn {
+    position: fixed;
+    bottom: 10px;
+    left: calc(50% + 70px); /* décalé vers la droite */
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    object-fit: cover;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    transition: transform 0.2s ease;
+    z-index: 999;
+}
+
+.action-image-btn:active {
+    transform: scale(0.9);
+}
 
 
 
