@@ -21,6 +21,11 @@ const motorValueElements = {
     m6: document.getElementById('m6-value')
 };
 
+// Image de base selon état de la pince
+document.getElementById('handle-right').style.backgroundImage = motorValues.m6 === 73
+    ? "url('assets/pince-closed.png')"
+    : "url('assets/pince-open.png')";
+
 // Initialisation des joysticks
 initJoystick('joystick-left', 'handle-left', (x, y) => {
     const newM1 = Math.max(0, Math.min(180, Math.round(motorValues.m1 + (x * 5))));
@@ -38,49 +43,30 @@ initJoystick('joystick-middle', 'handle-middle', (x, y) => {
 
 initJoystick('joystick-right', 'handle-right', (x, y, isPressed) => {
     const newM5 = Math.max(0, Math.min(180, Math.round(motorValues.m5 + (x * 5))));
-
     if (isPressed) {
         const newM6 = motorValues.m6 === 10 ? 73 : 10;
         updateMotorValue(6, newM6);
-
-        // 🖼️ Changer l’image du handle selon pince ouverte/fermée
-        const handle = document.getElementById('handle-right');
-        handle.style.backgroundImage = newM6 === 73
-            ? "url('assets/pince-closed.png')"
-            : "url('assets/pince-open.png')";
+        
     } else {
         updateMotorValue(5, newM5);
     }
 });
 
-
-
-
 resetBtn.addEventListener('click', () => {
-    // Animation visuelle rapide au clic
     resetBtn.classList.add('active');
     setTimeout(() => resetBtn.classList.remove('active'), 300);
 
-    // Affiche "Loading..." immédiatement
     statusText.textContent = "Loading...";
-
-    // ✅ Lancer animation visuelle pulse pour tous
     resetBtn.classList.add('pulse-feedback');
 
-    // 📲 Vibration si supportée
     if (navigator.vibrate) {
         navigator.vibrate([250, 750, 250, 750, 250]);
     }
 
-    // 🕒 Après 3s : fin de loading, début de la vraie réinit
     setTimeout(() => {
-        // Stop pulse visuel
         resetBtn.classList.remove('pulse-feedback');
-
-        // Met à jour l'état
         statusText.textContent = "Réinitialisation...";
 
-        // Réinitialise les moteurs
         updateMotorValue(1, 90);
         updateMotorValue(2, 90);
         updateMotorValue(3, 90);
@@ -88,12 +74,10 @@ resetBtn.addEventListener('click', () => {
         updateMotorValue(5, 90);
         updateMotorValue(6, 73);
 
-        // Reset handles
         document.getElementById('handle-left').style.transform = 'translate(-50%, -50%)';
         document.getElementById('handle-middle').style.transform = 'translate(-50%, -50%)';
         document.getElementById('handle-right').style.transform = 'translate(-50%, -50%)';
 
-        // Vérifie quand tout est revenu à la normale
         const checkInterval = setInterval(() => {
             const allAtDefault = (
                 motorValues.m1 === 90 &&
@@ -108,12 +92,8 @@ resetBtn.addEventListener('click', () => {
                 statusText.textContent = "Connecté";
             }
         }, 100);
-    }, 3000); // ⏱️ après 3s de loading
+    }, 3000);
 });
-
-
-
-
 
 setTimeout(() => {
     statusDot.classList.add('connected');
@@ -125,9 +105,26 @@ function updateMotorValue(motor, value) {
     if (motorValues[key] !== value) {
         motorValues[key] = value;
         const element = motorValueElements[key];
-        element.textContent = motor === 6 ? (value === 10 ? "Ouverte" : "Fermée") : `${value}°`;
+        element.textContent = motor === 6
+            ? (value === 10 ? "Ouverte" : "Fermée")
+            : `${value}°`;
         element.classList.add('changed');
         setTimeout(() => element.classList.remove('changed'), 500);
+
+        if (motor === 6) {
+            const handleImage = document.getElementById('handle-right-image');
+            const newImage = value === 73
+                ? "url('assets/pince-closed.png')"
+                : "url('assets/pince-open.png')";
+        
+            handleImage.style.backgroundImage = newImage;
+        
+            // 🔁 Force relance animation
+            handleImage.classList.remove('pulse-image');
+            void handleImage.offsetWidth;
+            handleImage.classList.add('pulse-image');
+        }
+
         sendMotorCommand(motor, value);
     }
 }
@@ -135,7 +132,6 @@ function updateMotorValue(motor, value) {
 function sendMotorCommand(motor, value) {
     const command = { motor, value, timestamp: Date.now() };
     console.log('Envoi commande:', command);
-    // bluetoothConnection.send(JSON.stringify(command));
 }
 
 function initJoystick(containerId, handleId, callback) {
@@ -143,7 +139,6 @@ function initJoystick(containerId, handleId, callback) {
     const handle = document.getElementById(handleId);
     const rect = container.getBoundingClientRect();
     const radius = rect.width / 2;
-    
 
     let isDragging = false;
     let isPressed = false;
@@ -152,7 +147,6 @@ function initJoystick(containerId, handleId, callback) {
     container.addEventListener('touchstart', handleStart);
     document.addEventListener('touchmove', handleMove, { passive: false });
     document.addEventListener('touchend', handleEnd);
-
     container.addEventListener('mousedown', handleStart);
     document.addEventListener('mousemove', handleMove);
     document.addEventListener('mouseup', handleEnd);
@@ -161,14 +155,13 @@ function initJoystick(containerId, handleId, callback) {
         e.preventDefault();
         isDragging = true;
         isPressed = true;
+        pressStartTime = Date.now(); // ← on démarre le chrono ici
+    
         if (e.type === 'touchstart') {
             touchId = e.changedTouches[0].identifier;
         }
-        if (containerId === 'joystick-right') {
-            callback(0, 0, isPressed ? 'pressed' : true); // true = début interaction
-            isPressed = false;
-        }
     }
+    
 
     function handleMove(e) {
         if (!isDragging) return;
@@ -196,7 +189,6 @@ function initJoystick(containerId, handleId, callback) {
         }
 
         handle.style.transform = `translate(calc(-50% + ${x}px), calc(-50% + ${y}px))`;
-
         const normalizedX = x / radius;
         const normalizedY = y / radius;
         callback(normalizedX, normalizedY, false);
@@ -210,9 +202,16 @@ function initJoystick(containerId, handleId, callback) {
         }
         handle.style.transform = `translate(-50%, -50%)`;
         isDragging = false;
-        touchId = null;
-        // NE PAS rappeler callback ici pour ne pas réinitialiser les valeurs moteurs
         
-        callback(normalizedX, normalizedY, false);
+        if (containerId === 'joystick-right') {
+            const duration = Date.now() - pressStartTime;
+            if (duration < 300) {
+                // 👆 Touche courte → déclenche ouverture/fermeture
+                callback(0, 0, true);
+            }
+        }
+        
+
+        touchId = null;
     }
 }
