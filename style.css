@@ -262,8 +262,8 @@ body {
 
 .reset-image-btn {
     position: fixed;
-    bottom: 10px;
-    left: 42%;
+    bottom: 20px;
+    left: 36%;
     width: 55px;
     height: 55px;
     border-radius: 50%;
@@ -275,7 +275,7 @@ body {
 }
 
 .reset-image-btn:active {
-    transform: translateX(-50%) scale(0.9);
+    transform: scale(0.9);
 }
 
 
@@ -325,8 +325,8 @@ body {
 
 .action-image-btn {
     position: fixed;
-    bottom: 10px;
-    left: calc(50% + 70px); /* décalé vers la droite */
+    bottom: 20px;
+    left: calc(46%);
     width: 55px;
     height: 55px;
     border-radius: 50%;
