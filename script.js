@@ -29,7 +29,7 @@ document.getElementById('handle-right').style.backgroundImage = motorValues.m6 =
 // Initialisation des joysticks
 initJoystick('joystick-left', 'handle-left', (x, y) => {
     const newM1 = Math.max(0, Math.min(180, Math.round(motorValues.m1 + (x * 5))));
-    const newM2 = Math.max(15, Math.min(165, Math.round(motorValues.m2 + (y * 5))));
+    const newM2 = Math.max(0, Math.min(180, Math.round(motorValues.m2 + (y * 5))));
     updateMotorValue(1, newM1);
     updateMotorValue(2, newM2);
 });
