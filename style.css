@@ -249,7 +249,7 @@ body {
 
 .footer {
     position: fixed;
-    bottom: 35px;
+    bottom: 25px;
     left: 42.5%;
     transform: translateX(-50%);
     display: flex;
