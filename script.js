@@ -21,6 +21,7 @@ const motorValueElements = {
     m6: document.getElementById('m6-value')
 };
 
+
 // Image de base selon état de la pince
 document.getElementById('handle-right').style.backgroundImage = motorValues.m6 === 73
     ? "url('assets/pince-closed.png')"
@@ -214,4 +215,30 @@ function initJoystick(containerId, handleId, callback) {
 
         touchId = null;
     }
+
+    document.getElementById('custom-btn').addEventListener('click', () => {
+        statusText.textContent = "Animation en cours...";
+    
+        const sequence = [
+            { m3: 60, m4: 120 }, // coude vers le haut, poignet vers l'extérieur
+            { m3: 100, m4: 70 }, // coude vers le bas, poignet vers l'intérieur
+            { m3: 60, m4: 120 }, // répète
+            { m3: 90, m4: 90 }   // revient au neutre
+        ];
+    
+        let step = 0;
+        const interval = setInterval(() => {
+            const move = sequence[step];
+            if (move.m3 !== undefined) updateMotorValue(3, move.m3);
+            if (move.m4 !== undefined) updateMotorValue(4, move.m4);
+            step++;
+    
+            if (step >= sequence.length) {
+                clearInterval(interval);
+                statusText.textContent = "Connecté";
+            }
+        }, 600);
+    });
+    
+
 }
