@@ -1,0 +1,365 @@
+
+/*RAJOUTER HOVERS BOUTONS*/
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+html, body {
+    padding: 0;
+    margin: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    background: #121212;
+    font-family: 'Montserrat', sans-serif;
+    position: relative;
+    touch-action: none;
+    display: flex;
+    flex-direction: column;
+    background-color: #121212;
+    color: white;
+}
+
+body {
+    -webkit-overflow-scrolling: touch;
+}
+
+/*Header*/
+
+.header {
+    padding: 10px;
+    text-align: center;
+    flex-shrink: 0;
+    margin-right: 135px; 
+}
+
+.connection-status {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 5px;
+}
+
+.status-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: #ff0d00;
+    margin-right: 8px;
+    transition: background-color 0.3s ease;
+}
+
+.status-dot.connected {
+    background-color: #00ff40;
+}
+
+
+
+
+/* Main Container */
+
+.main-container {
+    position: relative;
+    flex: 1;
+    display: flex;
+    justify-content: space-between; /* ou space-around */
+    align-items: center;
+    padding: 10px;
+    width: 100%;
+    max-width: 100vw;
+    margin-bottom: 90px;
+}
+
+
+
+
+/* Joysticks Container */
+
+.joystick-container {
+    display: flex;
+    justify-content: space-evenly; /* ou center + gap */
+    align-items: center;
+    width: 100%;
+}
+
+
+
+/* Base joystick */
+.joystick {
+    border-radius: 50%;
+    position: relative;
+    touch-action: none;
+    transition: transform 0.1s ease;
+
+}
+
+/* Joysticks */
+#joystick-left {
+    width: min(40vw, 200px);
+    height: min(40vw, 200px);
+    background-color: #0a84ff27;
+    border: 5px solid #0a84ff;
+    margin-left: 30px;
+
+}
+
+#joystick-middle {
+    width: min(40vw, 200px);
+    height: min(40vw, 200px);
+    background-color: #0a84ff27;
+    border: 5px solid #0a84ff;
+    margin-right: 160px;
+
+}
+
+#joystick-right {
+    width: min(30vw, 120px);
+    height: min(30vw, 120px);
+    background-color: rgba(255, 255, 255, 0.3);
+    border: 3px solid white;
+    margin-right: 3px;
+
+}
+
+/* Handles */
+#handle-left {
+    width: 105px;
+    height: 105px;
+    background-color: #FFFFFF;
+    border: 5px solid #0a84ff86;
+}
+
+#handle-middle {
+    width: 105px;   
+    height: 105px;
+    background-color: #FFFFFF;
+    border: 5px solid #0a84ff86
+}
+
+#handle-right {
+    width: 60px;
+    height: 60px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: transform 0.25s cubic-bezier(0.33, 1.5, 0.68, 1);
+    border-radius: 50%;
+    overflow: hidden; /* Pour garder la forme arrondie */
+}
+
+#handle-right-image {
+    width: 100%;
+    height: 100%;
+    background-image: url("assets/pince-open.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border: 3px solid white;
+    border-radius: 50%;
+}
+
+/* Animation */
+@keyframes pulse-image {
+    0% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.2); opacity: 0.8; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+.pulse-image {
+    animation: pulse-image 0.4s ease;
+}
+
+
+
+/* Position centrale commune */
+#handle-left,
+#handle-middle,
+#handle-right {
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: transform 0.25s cubic-bezier(0.33, 1.5, 0.68, 1);
+}
+
+
+
+
+
+
+/* Panel */
+
+.values-panel {
+    position: fixed; /* ✅ change absolute → fixed */
+    top: 10px;
+    right: 10px;
+    width: 120px;
+    background-color: #1e1e1e;
+    border-radius: 10px;
+    padding: 10px;
+    overflow-y: auto;
+    z-index: 999;
+}
+
+
+
+.motor-value {
+    margin-bottom: 12px;
+    animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.motor-label {
+    font-size: 12px;
+    color: #8e8e93;
+    margin-bottom: 2px;
+}
+
+.motor-data {
+    font-size: 16px;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+.motor-data.changed {
+    color: #0a84ff;
+    animation: pulse 0.5s ease;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+
+
+
+
+/* Footer */
+
+.footer {
+    position: fixed;
+    bottom: 25px;
+    left: 42.5%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 30px;
+    z-index: 999;
+    height: auto;
+    align-items: center;
+    justify-content: center;
+}
+
+.reset-image-btn,
+.action-image-btn {
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    object-fit: cover;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    transition: transform 0.2s ease;
+}
+
+.reset-image-btn:active,
+.action-image-btn:active {
+    transform: scale(0.9);
+}
+
+.reset-image-btn.pulse-feedback {
+    animation: pulse-btn 1s ease-out infinite;
+}
+
+@keyframes halo {
+    0% {
+        box-shadow: 0 0 0 0 rgba(10, 132, 255, 0.5);
+    }
+    100% {
+        box-shadow: 0 0 0 15px rgba(10, 132, 255, 0);
+    }
+}
+
+.motor-data.halo {
+    animation: halo 0.6s ease-out;
+}
+
+@keyframes pulse-btn {
+    0% {
+        box-shadow: 0 0 0 0 rgba(10, 132, 255, 0.5);
+        transform: scale(1);
+    }
+    70% {
+        box-shadow: 0 0 0 20px rgba(10, 132, 255, 0);
+        transform: scale(1.1);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(10, 132, 255, 0);
+        transform: scale(1);
+    }
+}
+
+/* Action sequence */
+#custom-btn {
+    background-color: #0a84ff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+
+
+
+
+
+/* Orientation Warning */
+
+
+@media screen and (orientation: landscape) {
+    .orientation-warning {
+        display: none !important;
+    }
+
+    body {
+        display: flex;
+    }
+}
+
+
+
+@media screen and (orientation: portrait) {
+    body {
+        display: none !important;
+    }
+
+    html::before {
+        content: "Veuillez passer en mode paysage pour utiliser El-Chappo.";
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        text-align: center;
+        color: white;
+        background: #121212;
+        font-size: 20px;
+        font-family: 'Montserrat', sans-serif;
+        padding: 20px;
+    }
+}
+
+
