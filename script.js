@@ -105,7 +105,7 @@ function updateMotorValue(motor, value) {
     
     if (motorValues[key] !== value) {
 
-        // 👁️ MAJ de l'interface avant l'envoi
+        // MAJ de l'interface avant l'envoi
         const element = motorValueElements[key];
         element.textContent = motor === 6
             ? (value === 10 ? "Ouverte" : "Fermée")
@@ -124,10 +124,10 @@ function updateMotorValue(motor, value) {
             handleImage.classList.add('pulse-image');
         }
 
-        // ✅ MAJ de la valeur après affichage
+        // MAJ valeur après affichage
         motorValues[key] = value;
 
-        // ✅ Envoi de la commande
+        // Envoi de la commande
         sendMotorCommand(motor, value);
     }
 }
@@ -246,7 +246,7 @@ document.getElementById('custom-btn').addEventListener('click', () => {
     }, 600);
 });
 
-// 🟢 Envoyer toutes les valeurs initiales dès le chargement
+// nvoye valeurs initiales au chargement
 window.addEventListener('load', () => {
     for (let i = 1; i <= 6; i++) {
         const key = `m${i}`;
@@ -279,5 +279,6 @@ window.addEventListener('load', () => {
           });
       });
       
+
 
 });
