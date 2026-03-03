@@ -6,13 +6,13 @@ import logging
 import sys
 from datetime import datetime
 
-# Suppression des messages par défaut de Flask
+# Suppression des mgs de Flask
 cli = sys.modules['flask.cli']
 cli.show_server_banner = lambda *x: None
 log = logging.getLogger('werkzeug')
 log.setLevel(logging.ERROR)
 
-# ⚙️ Paramètres série
+
 SERIAL_PORT = 'COMX'
 BAUDRATE = 9600
 
@@ -26,7 +26,7 @@ except Exception as e:
 
 app = Flask(__name__)
 
-# 🌐 Log de connexion
+# Connexion LOGS
 def log_connexion_infos():
     now = datetime.now().strftime("%H:%M:%S")
     ip = request.remote_addr or "?"
@@ -109,3 +109,4 @@ def envoyer():
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
+
