@@ -151,7 +151,7 @@ body {
     transform: translate(-50%, -50%);
     transition: transform 0.25s cubic-bezier(0.33, 1.5, 0.68, 1);
     border-radius: 50%;
-    overflow: hidden; /* Pour garder la forme arrondie */
+    overflow: hidden; 
 }
 
 #handle-right-image {
@@ -178,7 +178,7 @@ body {
 
 
 
-/* Position centrale commune */
+/* Position centrale */
 #handle-left,
 #handle-middle,
 #handle-right {
@@ -198,7 +198,7 @@ body {
 /* Panel */
 
 .values-panel {
-    position: fixed; /* ✅ change absolute → fixed */
+    position: fixed;
     top: 10px;
     right: 10px;
     width: 120px;
@@ -323,10 +323,6 @@ body {
 }
 
 
-
-
-
-
 /* Orientation Warning */
 
 
@@ -361,5 +357,6 @@ body {
         padding: 20px;
     }
 }
+
 
 
