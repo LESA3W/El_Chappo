@@ -3,6 +3,9 @@
 (function () {
     const params = new URLSearchParams(window.location.search);
     if (params.has("phone-embed")) return; // the copy shown inside the frame gets no button
+    // Already on a phone or tablet: previewing a phone inside a phone makes no sense
+    const touchDevice = window.matchMedia("(pointer: coarse) and (hover: none)").matches;
+    if (touchDevice) return;
 
     // iPhone 17 viewport in landscape, in CSS pixels
     const SCREEN_W = 874;
