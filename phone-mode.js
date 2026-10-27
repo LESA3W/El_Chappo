@@ -7,11 +7,51 @@
     // iPhone 17 viewport in landscape, in CSS pixels
     const SCREEN_W = 874;
     const SCREEN_H = 402;
-    // Where the screen sits inside assets/iphone17-landscape.png (481 x 231 source grid)
-    const HOLE = { left: 8 / 481, top: 9 / 231, width: 464 / 481, height: 214 / 231 };
-    const FRAME_W = SCREEN_W / HOLE.width;
-    const FRAME_H = SCREEN_H / HOLE.height;
+    const BEZEL = 14;        // black border around the screen
+    const BAND = 5;          // titanium band around the bezel
+    const INSET = BEZEL + BAND;
+    const FRAME_W = SCREEN_W + 2 * INSET;
+    const FRAME_H = SCREEN_H + 2 * INSET;
+    const SCREEN_R = 56;
+    const OUTER_R = SCREEN_R + INSET;
     const SIZE = 0.8; // share of the available space the phone takes
+
+    // Drawn as SVG so the frame stays sharp at any zoom level
+    const frameSvg = `
+        <svg viewBox="-6 -6 ${FRAME_W + 12} ${FRAME_H + 12}" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <linearGradient id="pm-titanium" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0" stop-color="#e9e3f1"/>
+                    <stop offset="0.45" stop-color="#b9b0c8"/>
+                    <stop offset="0.55" stop-color="#d8d0e3"/>
+                    <stop offset="1" stop-color="#a69cb7"/>
+                </linearGradient>
+            </defs>
+            <rect x="120" y="-4" width="56" height="7" rx="3" fill="#b9b0c8"/>
+            <rect x="196" y="-4" width="56" height="7" rx="3" fill="#b9b0c8"/>
+            <rect x="80" y="-4" width="26" height="7" rx="3" fill="#b9b0c8"/>
+            <rect x="${FRAME_W - 260}" y="${FRAME_H - 3}" width="90" height="7" rx="3" fill="#b9b0c8"/>
+            <path fill-rule="evenodd" fill="url(#pm-titanium)" d="
+                M ${OUTER_R} 0 H ${FRAME_W - OUTER_R} A ${OUTER_R} ${OUTER_R} 0 0 1 ${FRAME_W} ${OUTER_R}
+                V ${FRAME_H - OUTER_R} A ${OUTER_R} ${OUTER_R} 0 0 1 ${FRAME_W - OUTER_R} ${FRAME_H}
+                H ${OUTER_R} A ${OUTER_R} ${OUTER_R} 0 0 1 0 ${FRAME_H - OUTER_R}
+                V ${OUTER_R} A ${OUTER_R} ${OUTER_R} 0 0 1 ${OUTER_R} 0 Z
+                M ${OUTER_R} ${BAND} A ${OUTER_R - BAND} ${OUTER_R - BAND} 0 0 0 ${BAND} ${OUTER_R}
+                V ${FRAME_H - OUTER_R} A ${OUTER_R - BAND} ${OUTER_R - BAND} 0 0 0 ${OUTER_R} ${FRAME_H - BAND}
+                H ${FRAME_W - OUTER_R} A ${OUTER_R - BAND} ${OUTER_R - BAND} 0 0 0 ${FRAME_W - BAND} ${FRAME_H - OUTER_R}
+                V ${OUTER_R} A ${OUTER_R - BAND} ${OUTER_R - BAND} 0 0 0 ${FRAME_W - OUTER_R} ${BAND} Z"/>
+            <path fill-rule="evenodd" fill="#050506" d="
+                M ${OUTER_R} ${BAND} A ${OUTER_R - BAND} ${OUTER_R - BAND} 0 0 0 ${BAND} ${OUTER_R}
+                V ${FRAME_H - OUTER_R} A ${OUTER_R - BAND} ${OUTER_R - BAND} 0 0 0 ${OUTER_R} ${FRAME_H - BAND}
+                H ${FRAME_W - OUTER_R} A ${OUTER_R - BAND} ${OUTER_R - BAND} 0 0 0 ${FRAME_W - BAND} ${FRAME_H - OUTER_R}
+                V ${OUTER_R} A ${OUTER_R - BAND} ${OUTER_R - BAND} 0 0 0 ${FRAME_W - OUTER_R} ${BAND} Z
+                M ${INSET + SCREEN_R} ${INSET} A ${SCREEN_R} ${SCREEN_R} 0 0 0 ${INSET} ${INSET + SCREEN_R}
+                V ${INSET + SCREEN_H - SCREEN_R} A ${SCREEN_R} ${SCREEN_R} 0 0 0 ${INSET + SCREEN_R} ${INSET + SCREEN_H}
+                H ${INSET + SCREEN_W - SCREEN_R} A ${SCREEN_R} ${SCREEN_R} 0 0 0 ${INSET + SCREEN_W} ${INSET + SCREEN_H - SCREEN_R}
+                V ${INSET + SCREEN_R} A ${SCREEN_R} ${SCREEN_R} 0 0 0 ${INSET + SCREEN_W - SCREEN_R} ${INSET} Z"/>
+            <rect x="${INSET + 11}" y="${FRAME_H / 2 - 62}" width="35" height="124" rx="17.5" fill="#000"/>
+            <circle cx="${INSET + 28.5}" cy="${FRAME_H / 2 + 42}" r="6" fill="#0d1424"/>
+        </svg>`;
 
     const style = document.createElement("style");
     style.textContent = `
@@ -93,24 +133,26 @@
             height: ${FRAME_H}px;
             flex-shrink: 0;
             transform-origin: center;
+            border-radius: ${OUTER_R}px;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.55);
         }
         .phone-mode-stage iframe {
             position: absolute;
-            left: ${HOLE.left * 100}%;
-            top: ${HOLE.top * 100}%;
+            left: ${INSET}px;
+            top: ${INSET}px;
             width: ${SCREEN_W}px;
             height: ${SCREEN_H}px;
             border: 0;
-            border-radius: 44px;
+            border-radius: ${SCREEN_R}px;
             background: #000;
         }
-        .phone-mode-stage img {
+        .phone-mode-stage > svg {
             position: absolute;
-            inset: 0;
-            width: 100%;
-            height: 100%;
+            left: -6px;
+            top: -6px;
+            width: ${FRAME_W + 12}px;
+            height: ${FRAME_H + 12}px;
             pointer-events: none;
-            user-select: none;
         }
     `;
     document.head.appendChild(style);
@@ -126,10 +168,7 @@
     overlay.className = "phone-mode-overlay";
     const stage = document.createElement("div");
     stage.className = "phone-mode-stage";
-    const frame = document.createElement("img");
-    frame.src = "assets/iphone17-landscape.png";
-    frame.alt = "";
-    stage.appendChild(frame);
+    stage.innerHTML = frameSvg;
     overlay.appendChild(stage);
 
     function fit() {
@@ -149,7 +188,7 @@
             url.searchParams.set("phone-embed", "1");
             screen.src = url.toString();
             screen.title = "El-Chappo on iPhone 17";
-            stage.insertBefore(screen, frame);
+            stage.insertBefore(screen, stage.firstChild);
         }
         overlay.classList.add("open");
         btn.classList.add("active");
