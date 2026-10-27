@@ -1,6 +1,6 @@
 ![el_chappo_the_arm_mockup](https://github.com/user-attachments/assets/a20254dc-143e-409d-bb05-056b8a877f64)
 
-# 🦾 El Chappo The Arm
+# El Chappo The Arm
 
 A robotic arm I built from A to Z, by replicating the parts of Arduino's orange robotic arm kit (Braccio), plus the web app to drive it remotely from a phone or a computer.
 
