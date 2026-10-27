@@ -1,4 +1,6 @@
-![el_chappo_the_arm_mockup](https://github.com/user-attachments/assets/a20254dc-143e-409d-bb05-056b8a877f64)
+<p align="center">
+  <img src="docs/mockup.jpg" alt="El Chappo controller on an iPhone 17" width="720">
+</p>
 
 # El Chappo The Arm
 
